@@ -7,10 +7,11 @@ import jakarta.persistence.*;
 @Table(name="clients")
 public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
     private String nome;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "assento_id", unique = true)
     private Assento assento;
 
@@ -33,6 +34,8 @@ public class Cliente {
     public String getNome(){
         return nome;
     }
+
+
 
     public void setId(Long id){
         this.id = id;

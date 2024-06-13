@@ -1,18 +1,18 @@
 package com.example.demo.modelo.base.umpraum;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "assentos")
 public class Assento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
     private String nome;
 
+    @OneToOne(mappedBy = "assento")
+    private Cliente cliente;
     public Assento() {
 
     }
@@ -28,6 +28,10 @@ public class Assento {
 
     public String getNome() {
         return nome;
+    }
+
+    public String getClienteNome(){
+        return "Cliente:" + this.cliente.getNome() + "\n" +  "Assento: " + this.getNome() + "\n";
     }
 
     public void setId(Long id) {

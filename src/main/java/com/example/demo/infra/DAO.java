@@ -6,8 +6,11 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DAO<E>{
+  private static final Logger  logger = Logger.getLogger(DAO.class.getName());
   private static EntityManagerFactory emf;
   private EntityManager em;
   private Class<E> classe;
@@ -16,7 +19,7 @@ public class DAO<E>{
     try{
       emf = Persistence.createEntityManagerFactory("curso_java");
     }catch(Exception e){
-
+      logger.log(Level.SEVERE, "Erro ao criar EntityManagerFactory", e);
 
     }
   }
@@ -25,6 +28,9 @@ public class DAO<E>{
   }
 
   public DAO(Class<E>classe){
+    if (emf == null) {
+      throw new IllegalStateException("EntityManagerFactory não foi inicializada.");
+    }
     this.classe = classe;
     em = emf.createEntityManager();
   }
@@ -47,6 +53,10 @@ public class DAO<E>{
 
   public DAO<E> incluirAtomico(E entidade){
     return this.abrirT().incluir(entidade).fecharT();
+  }
+
+  public E obterPorId(Object id){
+    return em.find(classe,id);
   }
 
 

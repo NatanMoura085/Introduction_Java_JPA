@@ -7,13 +7,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NovoCliente1Assento {
+public class NovoCliente2Assento {
     public static void main(String[] args) {
-        SpringApplication.run(NovoCliente1Assento.class,args);
-        Assento assento = new Assento("7F");
-        Cliente cliente = new Cliente("Mara",assento);
-        DAO<Object> clienteDAO = new DAO<>();
+        SpringApplication.run(NovoCliente2Assento.class,args);
+        Assento assento = new Assento("4D");
+        Cliente cliente = new Cliente("Ronaldo",assento);
 
-        clienteDAO.abrirT().incluir(assento).incluir(cliente).fecharT().fecharManager();
+        DAO<Cliente> clienteDAO = new DAO<>(Cliente.class);
+
+        clienteDAO.incluirAtomico(cliente);
+
     }
 }
