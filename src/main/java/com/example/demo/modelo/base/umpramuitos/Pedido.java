@@ -3,6 +3,7 @@ package com.example.demo.modelo.base.umpramuitos;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Pedido {
@@ -12,6 +13,9 @@ public class Pedido {
     private Long id;
     @Column(nullable = false)
     private Date date;
+
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itens;
 
     public Pedido(){
     this(new Date());
@@ -39,4 +43,14 @@ public class Pedido {
     public void setDate(Date date){
         this.date =date;
     }
+
+
+    public List<ItemPedido> getItens(){
+        return itens;
+    }
+
+    public void setItens(List<ItemPedido> itens){
+        this.itens = itens;
+    }
+
 }
